@@ -1,0 +1,51 @@
+1. What are the key lessons you learned about web application security, and how do they relate to the CIA Triad?
+
+The CIA Triad—Confidentiality, Integrity, and Availability—is the cornerstone of web security:
+Confidentiality: Keeping sensitive information private (e.g., using HTTPS, encrypting sensitive data).
+Integrity: Ensuring data is not tampered with (e.g., validating user inputs, employing digital signatures).
+Availability: Guaranteeing systems are accessible when needed (e.g., defending against DDoS, maintaining system backups).
+Key lessons involve understanding threat models, routine security assessments (like penetration testing), and employing the principle of least privilege to minimize risks.
+
+2. How do vulnerabilities and exploits affect web applications, and how can you defend against these attacks?
+
+Vulnerabilities: Flaws in the system that attackers can exploit (e.g., unpatched software or weak authentication).
+Exploits: Actions attackers take to use these vulnerabilities (e.g., exploiting an insecure API for unauthorized access).
+Mitigation Approaches:
+Keep all systems and software updated.
+Implement Web Application Firewalls (WAFs) to monitor and block malicious traffic.
+Write secure code (e.g., using parameterized queries to prevent SQL injection).
+Use strong encryption and enforce secure authentication mechanisms.
+
+3. What role do different layers (client, server, database, etc.) play in web security, and what specific threats exist at each layer?
+
+Client-Side: Risks include phishing and cross-site scripting (XSS). Countermeasures: Input validation, enforcing content security policies (CSP).
+Server-Side: Risks include server-side request forgery (SSRF), broken access control, and configuration issues. Countermeasures: Secure frameworks, timely patching, and access control mechanisms.
+Database: Risks include SQL injection and unauthorized data access. Countermeasures: Use parameterized queries, role-based access, and database monitoring tools.
+Network: Risks include man-in-the-middle (MITM) attacks and denial-of-service (DoS) attacks. Countermeasures: Encrypt traffic (SSL/TLS), use intrusion prevention systems (IPS), and enable network firewalls.
+
+4. Discuss how web application security can fail in terms of configuration, policy, or assumptions. Provide an example you’ve learned about.
+
+Configuration Errors: Exposing sensitive files, such as config.json, to public endpoints.
+Policy Gaps: Weak password policies leading to credential stuffing attacks.
+Faulty Assumptions: Assuming users won’t manipulate inputs.
+Example: The Equifax breach, caused by failing to patch a known vulnerability in Apache Struts, highlights the importance of timely updates.
+Lesson: Regular system audits and automated tools like vulnerability scanners are essential to mitigate risks.
+
+5. How do you think about risk and impact when evaluating web application security? 
+
+Risk: Probability of a vulnerability being exploited.
+Impact: The potential consequences (e.g., financial damage, reputational harm).
+Using frameworks like the OWASP Risk Rating Methodology can help prioritize risks.
+Example: A cross-site scripting (XSS) vulnerability might seem minor but can lead to session hijacking on critical pages, making it high impact despite low likelihood.
+
+6. What prevention strategies have you found most effective.
+
+Secure Development Practices:
+Validate and sanitize all user inputs.
+Remove sensitive data from the codebase (e.g., no hardcoded credentials).
+Automation: Regularly scan code and applications for vulnerabilities.
+Authentication & Authorization: Enable multi-factor authentication (MFA) and least privilege access.
+Encryption: Encrypt data in transit (e.g., HTTPS) and at rest.
+Incident Response Plans: Develop and rehearse a robust incident response plan.
+Training: Keep developers and employees informed about common attack techniques and mitigation methods.
+ 
