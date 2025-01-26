@@ -1,0 +1,169 @@
+1. Write a script to log the current URL of the page using the window.location property. Extract and log any query parameters. Discuss how query parameters might be exploited in a phishing attack.
+=>
+console.log("Current URL:", window.location.href);
+const queryParams = new URLSearchParams(window.location.search);
+queryParams.forEach((value, key) => {
+  console.log(`Query Parameter - ${key}: ${value}`);
+});
+
+Query parameters in URLs can be exploited in phishing attacks by redirecting users to malicious sites, stealing session tokens, 
+or injecting malicious scripts (XSS). To prevent this, sanitize input, avoid sensitive data in URLs, use HTTPS, and educate 
+users about verifying links.
+
+2. Write a script to log the hostname, protocol, and pathname of the current page using window.location. Explain how 
+attackers might manipulate these properties to perform malicious redirects.
+=>
+console.log("Hostname:", window.location.hostname);
+console.log("Protocol:", window.location.protocol);
+console.log("Pathname:", window.location.pathname);
+
+Attackers can manipulate hostname, protocol, and pathname in window.location to perform malicious redirects, such as spoofing
+domains, downgrading to http for MITM attacks, or appending phishing paths. Prevent this by enforcing HTTPS, validating redirects, 
+and avoiding unvalidated dynamic URLs.
+
+
+3.Write a script that uses window.location to redirect users to another webpage. Add a condition to restrict redirects only to 
+trusted domains. Discuss the implications of open redirects in phishing attacks.
+=>
+const redirectUrl = "https://www.geeksforgeeks.org/";
+if (redirectUrl.startsWith("https://www.geeksforgeeks.org/")) {
+  window.location.href = redirectUrl;
+} else {
+  console.warn("Untrusted redirect blocked.");
+}
+
+Open redirects allow attackers to redirect users to malicious sites, enabling phishing and credential theft.
+Prevent this by validating URLs, avoiding dynamic redirects, and warning users before external redirections.
+
+
+4. Write a script to log the number of pages visited in the current session using window.history. Discuss 
+potential privacy concerns if malicious scripts attempt to track browser history.
+=>
+console.log("Pages visited in this session:", window.history.length);
+
+Malicious scripts tracking browser history can expose sensitive data, enable behavior profiling, and aid 
+phishing. Prevent this with Content Security Policies, cautious extension permissions, and regular data clearing.
+
+5.Write a script using window.navigator to display the user agent string. Modify the script to identify and log 
+whether the browser is Google Chrome, Mozilla Firefox, or an automation tool.
+=>
+console.log("User Agent String:", window.navigator.userAgent);
+function identifyBrowser() {
+    const userAgent = window.navigator.userAgent;
+ 
+    if (userAgent.includes("Chrome") && !userAgent.includes("Edg") && !userAgent.includes("OPR")) {
+        console.log("Browser: Google Chrome");
+    } else if (userAgent.includes("Firefox")) {
+        console.log("Browser: Mozilla Firefox");
+    } else if (userAgent.includes("HeadlessChrome")) {
+        console.log("Environment: Automation Tool (Headless Chrome)");
+    } else if (userAgent.includes("Selenium") || userAgent.includes("Puppeteer") || userAgent.includes("Playwright")) {
+        console.log("Environment: Automation Tool (Selenium, Puppeteer, or Playwright)");
+    } else {
+        console.log("Browser: Unknown or other");
+    }
+}
+identifyBrowser();
+ 
+6. Write a script to log the user's screen width and height using window.screen. Explain how attackers might use 
+screen dimensions to craft phishing attacks.
+=>
+console.log("Screen Width:", window.screen.width);
+console.log("Screen Height:", window.screen.height);
+ 
+7.Write a script to open a new popup window using window.open. Discuss the risks associated with popup-based attacks and 
+suggest mitigation strategies.
+=>
+let popup = window.open("https://example.com", "PopupWindow", "width=600,height=400");
+if (popup) {
+    console.log("Popup window opened successfully.");
+} else {
+    console.log("Popup window blocked by the browser.");
+}
+ 
+8.Write a script to log the domain and origin of the current page using window.location. Explain how these properties 
+are relevant in CORS security.
+=>
+console.log("Domain:", window.location.hostname);   
+console.log("Origin:", window.location.origin);
+ 
+9.Write a script using window.setTimeout that simulates a login timeout after 10 seconds of inactivity. 
+Enhance the script to reset the timer whenever the user interacts with the page.
+=>
+let timer = setTimeout(() => {
+  alert("Session expired due to inactivity.");
+}, 10000);
+document.addEventListener("mousemove", resetTimer);
+document.addEventListener("keydown", resetTimer);
+ 
+10.Write a script that checks if the current URL uses "https" using window.location. Alert the user if the 
+page is not secure and suggest measures to handle such scenarios.
+=>
+const timeoutLimit = 10000;
+let timeoutID;
+function simulateTimeout() {
+    alert("You have been logged out due to inactivity.");
+}
+function resetTimer() {
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(simulateTimeout, timeoutLimit);
+}
+window.onload = resetTimer; 
+window.onclick = resetTimer;
+window.onmousemove = resetTimer;
+window.onkeydown = resetTimer; 
+timeoutID = setTimeout(simulateTimeout, timeoutLimit);
+
+
+11.Write a script to open a new window and then close it using window.close.
+Discuss scenarios where malicious scripts might misuse this functionality to disrupt user experience.
+=>
+let popupWindow = window.open("https://example.com", "PopupWindow", "width=600,height=400");
+if (popupWindow) {
+    console.log("Popup window opened successfully.");
+    setTimeout(function() {
+        popupWindow.close();
+        console.log("Popup window closed.");
+    }, 5000);  
+} else {
+    console.log("Popup window blocked by the browser.");
+}
+
+The attacker can repeatedly open new windows and close them quickly to annoy the user or cause frustration, which might lead to the user leaving the site.
+After collecting sensitive information or performing unwanted actions (such as making a purchase or subscribing to a service), the attacker might close the window immediately to hide the malicious activity.
+A malicious attacker might use window.open and window.close to open popups, tricking the user into completing an action (such as entering credit card details) before they are able to navigate away or close the page.
+ 
+12.Write a script to scroll the webpage to the top using window.scrollTo.
+Modify the script to scroll to a specific element on the page.
+Discuss how attackers might use scrolling to hide malicious content or overlays.
+=>
+window.scrollTo(0, 0);
+ 
+modified script:
+const element = document.getElementById("targetElement");
+if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+ 
+The attacker could load malicious content at the top or bottom of the page, and by manipulating the scroll position, the content could remain hidden until a certain condition is met (e.g., the user scrolls to a different section or clicks on an invisible link).
+The attacker could scroll the page so that the malicious iframe or popup is not visible but is still functional (e.g., phishing form, fake login screen)
+Malicious scripts could be running off-screen or in hidden sections of the page, and by using scroll manipulation, the attacker could keep them invisible to the user, collecting sensitive information in the background.
+ 
+13. Write a script to retrieve the current webpage's title using document.title and log it to the console. 
+Modify the title to include a security warning if it doesn't already contain "Secure." Explain how attackers 
+might manipulate the document title for phishing or social engineering attacks.
+=>
+let currentTitle = document.title;
+console.log("Current Title:", currentTitle);
+if (!currentTitle.includes("Secure")) {
+    document.title = currentTitle + " - Secure Warning!";
+    console.log("Modified Title:", document.title);
+} else {
+    console.log("Title already contains 'Secure'. No changes made.");
+}
+ 
+The attacker could change the title to "YourBank - Secure Login" on a phishing site. This would make the page appear more trustworthy to the user, increasing the likelihood they will enter sensitive information such as login credentials.
+The attacker could use this tactic as part of a larger social engineering attack, enticing users to input personal or financial information into the fake site.
+An attacker might change the title to something like "Urgent Security Alert - Immediate Action Required!" to prompt users to take immediate action, such as clicking a malicious link or entering personal data.
+
+
